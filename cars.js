@@ -1,6 +1,3 @@
-let userName = "",
-  userAge = 0;
-
 class Driver {
   constructor(name, age) {
     this.name = name;
@@ -10,53 +7,52 @@ class Driver {
     console.log(`Привет, меня зовут ${this.name}!`);
   }
 }
-
 class Vehicle {
-  constructor(model, color, isTrack) {
-    this.model = model;
-    this.color = color;
-    this.track = isTrack;
-  }
-  getin() {
-    console.log(`Я ${this.color} ${this.model}, в меня сел ${userName}!`);
+  getin(user) {
+    console.log(`Я ${this.color} ${this.model}, в меня сел ${user.name}!`);
   }
   drive() {
     console.log(`Я ${this.model}, я еду!`);
   }
   brake() {
-    if (userAge >= 18) {
-      if (this.track == false) {
-        console.log(`Я АВТОМОБИЛЬ ${this.model}, я торможу БЫСТРО!`);
-      } else {
-        if (userAge >= 21) {
-          console.log(`Я ГРУЗОВИК ${this.model}, я торможу МЕДЛЕННО!`);
-        } else {
-          console.log(`${userName} слишком молод, чтобы водить грузовик!`);
-        }
-      }
-    } else {
-      console.log(`${userName} слишком молод, чтобы управлять автомобилем или грузовиком!`);
-    }
+    console.log(`Я ${this.type} ${this.model}, я торможу ${this.speed}!`);
   }
-  getout() {
-    if (this.track == false) {
-      console.log(`Я АВТОМОБИЛЬ ${this.model}, из меня вышел ${userName}!`);
-    } else {
-      console.log(`Я ГРУЗОВИК ${this.model}, из меня вышел ${userName}!`);
-    }
+  getout(user) {
+    console.log(`Я ${this.type} ${this.model}, из меня вышел ${user.name}!`);
   }
 }
 
-drives = (name, age, model, color, isTrack) => {
-  let user = new Driver(name, age);
-  user.sayHello();
-  userName = user.name;
-  userAge = user.age;
+class Car extends Vehicle {
+  constructor(model, color) {
+    super(model, color);
+    this.model = model;
+    this.color = color;
+    this.type = "АВТОМОБИЛЬ";
+    this.speed = "БЫСТРО";
+  }
+}
+class Track extends Vehicle {
+  constructor(model, color) {
+    super(model, color);
+    this.model = model;
+    this.color = color;
+    this.type = "ГРУЗОВИК";
+    this.speed = "МЕДЛЕННО";
+  }
+}
 
-  let vehicle = new Vehicle(model, color, isTrack);
-  vehicle.getin();
-  vehicle.brake();
-  vehicle.getout();
-};
-drives("Пётр", 25, "lada granta", "синий", false);
-drives("Пётр", 25, "Газель", "серый", true);
+let p1 = new Driver("Пётр", 36);
+p1.sayHello();
+
+let c1 = new Car("lada", "green");
+
+c1.getin(p1);
+c1.drive();
+c1.brake();
+c1.getout(p1);
+
+let t1 = new Track("gazel", "grey");
+t1.getin(p1);
+t1.drive();
+t1.brake();
+t1.getout(p1);
